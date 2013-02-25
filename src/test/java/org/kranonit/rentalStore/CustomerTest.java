@@ -21,7 +21,7 @@ public class CustomerTest {
 		c.addRental(new Rental(m2, 4));
 		c.addRental(new Rental(m3, 5));
 		c.addRental(new Rental(m4, 6));
-		String statementResult = c.statement();
+		String statementResult = c.getRentedMovies();
 		System.out.print(statementResult);
 		Assert.assertEquals("Rental Record for stokito\n" +
 				"\tЗа двумя зайцами\t3.5\n" +

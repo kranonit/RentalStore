@@ -2,6 +2,12 @@ package org.kranonit.rentalStore;
 
 class Rental {
 
+    public static final int REGULAR_MOVIE_RENT_PRICE = 2;
+    public static final int MAX_DAYS_FOR_RENT_REGULAR = 2;
+    public static final double OVERDUE_PENALTY = 1.5;
+    public static final int NEW_RELEASE_RENT_PRICE = 3;
+    public static final double CHILDREN_MOVIE_RENT_PRICE = 1.5;
+    public static final int MAX_DAYS_FOR_RENT_CHILDREN = 3;
     private Movie _movie;
 
     private int _daysRented;
@@ -12,25 +18,39 @@ class Rental {
     }
 
 	public double getCharge() {
-		double thisAmount = 0;
-		// determine amounts for each line
+		double result = 0;
+		// determine rental price for movie by his type
 		switch (getMovie().getPriceCode()) {
 			case Movie.REGULAR:
-				thisAmount += 2;
-				if (getDaysRented() > 2)
-					thisAmount += (getDaysRented() - 2) * 1.5;
+				result = getPriceForRegularMovie();
 				break;
 			case Movie.NEW_RELEASE:
-				thisAmount += getDaysRented() * 3;
+				result = getPriceForNewRelease();
 				break;
 			case Movie.CHILDRENS:
-				thisAmount += 1.5;
-				if (getDaysRented() > 3)
-					thisAmount += (getDaysRented() - 3) * 1.5;
+				result = getPriceForChildrenMovie();
 				break;
 		}
-		return thisAmount;
+		return result;
 	}
+
+    private double getPriceForRegularMovie(){
+        double result = REGULAR_MOVIE_RENT_PRICE;
+        if (getDaysRented() > MAX_DAYS_FOR_RENT_REGULAR)
+            result += (getDaysRented() - MAX_DAYS_FOR_RENT_REGULAR) * OVERDUE_PENALTY;
+        return result;
+    }
+
+    private double getPriceForNewRelease(){
+        return getDaysRented() * NEW_RELEASE_RENT_PRICE;
+    }
+
+    private double getPriceForChildrenMovie(){
+        double result = CHILDREN_MOVIE_RENT_PRICE;
+        if (getDaysRented() > MAX_DAYS_FOR_RENT_CHILDREN)
+            result += (getDaysRented() - MAX_DAYS_FOR_RENT_CHILDREN) * OVERDUE_PENALTY;
+        return result;
+    }
 
 	public int getDaysRented() {
         return _daysRented;
@@ -38,5 +58,15 @@ class Rental {
 
     public Movie getMovie() {
         return _movie;
+    }
+
+    public boolean isRentNewReleaseTwoDays() {
+        return (getMovie().getPriceCode() == Movie.NEW_RELEASE)
+                && getDaysRented() > 1;
+    }
+
+    public String getNameAndPriceAsString() {
+        return "\t" + getMovie().getTitle() + "\t"
+                + String.valueOf(getCharge()) + "\n";
     }
 }
