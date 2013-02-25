@@ -3,7 +3,6 @@ package org.kranonit.rentalStore;
 class Rental {
 
     private Movie _movie;
-
     private int _daysRented;
 
     public Rental(Movie movie, int daysRented) {
