@@ -12,7 +12,9 @@ public class Main {
         c.addRental(new Rental(m2, 4));
         c.addRental(new Rental(m3, 5));
         c.addRental(new Rental(m4, 6));
-        System.out.println(c.statement());
+        System.out.print(c.statement());
+        System.out.print( "\n\nVersion for HTML:\n\n" );
+        System.out.print(c.htmlStatement());
     }
 
 }
