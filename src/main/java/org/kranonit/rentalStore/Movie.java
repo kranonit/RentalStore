@@ -38,11 +38,11 @@ public class Movie {
         return _title;
     }
 
-    public double getCharge(int daysRented) {
+    double getCharge(int daysRented) {
         return _price.getCharge(daysRented);
     }
 
-    public int getFrequentRenterPoints(int daysRented) {
+    int getFrequentRenterPoints(int daysRented) {
         if ((getPriceCode() == Movie.NEW_RELEASE) && daysRented > 1)
             return 2;
         else
